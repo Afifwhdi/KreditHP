@@ -53,12 +53,12 @@ class InstallmentsTable
                             ->first();
 
                         if (!$cicilan) {
-                            return 'success'; // semua sudah lunas
+                            return 'success';
                         }
 
                         return match ($cicilan->status) {
-                            'OVERDUE' => 'danger',   // merah
-                            'DUE'     => 'warning',  // kuning
+                            'OVERDUE' => 'danger',
+                            'DUE'     => 'warning',
                             default   => 'gray',
                         };
                     }),
@@ -79,8 +79,7 @@ class InstallmentsTable
 
                 TextColumn::make('amount_due')
                     ->label('Angsuran/Bulan')
-                    ->money('IDR')
-                    ->alignRight(),
+                    ->money('IDR'),
 
                 TextColumn::make('credit.status')
                     ->label('Status Kredit')
@@ -126,7 +125,7 @@ class InstallmentsTable
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
+                // EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([DeleteBulkAction::make()]),

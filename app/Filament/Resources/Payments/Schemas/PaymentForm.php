@@ -110,6 +110,7 @@ class PaymentForm
 
             Forms\Components\FileUpload::make('evidence_path')
                 ->label('Bukti Pembayaran')
+                ->disk('public')
                 ->directory('payments/evidence')
                 ->nullable(),
         ];
