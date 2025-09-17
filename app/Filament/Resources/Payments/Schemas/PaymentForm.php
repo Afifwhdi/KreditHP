@@ -11,7 +11,6 @@ class PaymentForm
     public static function schema(): array
     {
         return [
-            // Pilih pelanggan (unik, tanpa duplikat)
             Forms\Components\Select::make('customer_id')
                 ->label('Pelanggan Kredit')
                 ->options(
@@ -42,7 +41,6 @@ class PaymentForm
                     if ($credits->count() === 1) {
                         $credit = $credits->first();
 
-                        // Auto set credit & detail
                         $set('credit_id', $credit->id);
                         $set('credit_code', $credit->code);
                         $set('product_name', $credit->product->name);
@@ -60,7 +58,6 @@ class PaymentForm
                             $set('installment_info', "Semua cicilan sudah lunas");
                         }
                     } else {
-                        // Kalau lebih dari 1, biarkan admin pilih produk
                         $set('credit_id', null);
                         $set('credit_code', null);
                         $set('product_name', null);
@@ -70,7 +67,6 @@ class PaymentForm
                     }
                 }),
 
-            // Pilih produk kredit (aktif hanya kalau customer punya >1 kredit)
             Forms\Components\Select::make('credit_id')
                 ->label('Produk Kredit')
                 ->options(function (callable $get) {
@@ -117,11 +113,9 @@ class PaymentForm
                     }
                 }),
 
-            // Hidden credit_id untuk ikut tersimpan
             Forms\Components\Hidden::make('credit_id')
                 ->dehydrated(true),
 
-            // Info Kredit (readonly)
             Forms\Components\TextInput::make('credit_code')
                 ->label('Kode Kredit')
                 ->disabled()
@@ -143,7 +137,6 @@ class PaymentForm
                 ->disabled()
                 ->dehydrated(false),
 
-            // Nominal Bayar
             Forms\Components\TextInput::make('amount')
                 ->label('Nominal Bayar')
                 ->numeric()

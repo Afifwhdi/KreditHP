@@ -7,7 +7,6 @@ use App\Models\Credit;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
-use Illuminate\Database\Eloquent\Builder;
 
 class ListCredits extends ListRecords
 {
@@ -23,15 +22,21 @@ class ListCredits extends ListRecords
     public function getTabs(): array
     {
         return [
-            'Aktif' => Tab::make()
+            Tab::make('Semua')
+                ->modifyQueryUsing(fn($query) => $query)
+                ->badge(Credit::count())
+                ->badgeColor('gray'),
+
+            Tab::make('Aktif')
                 ->modifyQueryUsing(fn($query) => $query->where('status', 'ACTIVE'))
                 ->badge(Credit::query()->where('status', 'ACTIVE')->count())
                 ->badgeColor('warning'),
 
-            'Lunas' => Tab::make()
+            Tab::make('Lunas')
                 ->modifyQueryUsing(fn($query) => $query->where('status', 'LUNAS'))
                 ->badge(Credit::query()->where('status', 'LUNAS')->count())
                 ->badgeColor('success'),
+
         ];
     }
 }
