@@ -1,0 +1,30 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# Vendor & node_modules excluded from GitHub language stats
+/vendor linguist-vendored
+/node_modules linguist-vendored
+
+# Force specific files to be treated as text
+*.php text
+*.js text
+*.css text
+*.md text
+*.json text
+*.yml text
+*.yaml text
+*.xml text
+*.blade.php text
+
+# Treat images/binaries as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.mp4 binary
+*.mp3 binary

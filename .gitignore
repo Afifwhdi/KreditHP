@@ -1,0 +1,41 @@
+# Laravel
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+.env.*
+.phpunit.result.cache
+.php_cs.cache
+Homestead.yaml
+Homestead.json
+/.php-cs-fixer.cache
+
+# Laravel tambahan
+/.octane
+/.horizon
+/.telescope
+
+# Cache & Logs
+/storage/debugbar
+/storage/framework/*
+!/storage/framework/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# IDE & OS files
+.idea
+.vscode
+*.sublime-workspace
+*.sublime-project
+*.DS_Store
+Thumbs.db
+
+# Node / Frontend
+/public/hot
+/public/build
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
