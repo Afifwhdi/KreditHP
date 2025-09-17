@@ -1,3 +1,8 @@
+![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?logo=laravel&logoColor=white)
+![Filament](https://img.shields.io/badge/Filament-4.x-06B6D4?logo=tailwindcss&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?logo=mysql&logoColor=white)
+
 # 💳 KreditHP - Sistem Kredit HP
 
 Sistem Kredit HP adalah aplikasi berbasis **Laravel + Filament** yang saya kembangkan untuk mengelola proses kredit smartphone.  
