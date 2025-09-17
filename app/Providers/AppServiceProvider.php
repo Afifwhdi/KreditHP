@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Payment;
 use Illuminate\Support\ServiceProvider;
+use App\Observers\PaymentObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Set default path ke tesseract.exe
+        Payment::observe(PaymentObserver::class);
     }
 }

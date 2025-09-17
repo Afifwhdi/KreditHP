@@ -11,6 +11,8 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Actions\Action;
+
 
 class InstallmentsTable
 {
@@ -123,9 +125,15 @@ class InstallmentsTable
                     )
                     ->toggle(),
             ])
+
+            ->filtersTriggerAction(
+                fn(Action $action) => $action
+                    ->button()
+                    ->label('Filter Data')
+            )
+
             ->recordActions([
                 ViewAction::make(),
-                // EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([DeleteBulkAction::make()]),

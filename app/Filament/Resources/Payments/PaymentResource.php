@@ -42,6 +42,13 @@ class PaymentResource extends Resource
         ];
     }
 
+    public static function beforeCreate($record): void
+    {
+        if ($record->credit->status === 'LUNAS') {
+            throw new \Exception("❌ Kredit sudah lunas, tidak bisa menambahkan pembayaran baru.");
+        }
+    }
+
     public static function getPages(): array
     {
         return [
