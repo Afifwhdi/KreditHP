@@ -22,8 +22,6 @@ Aplikasi ini membantu admin dalam mencatat pelanggan, mengelola cicilan, memanta
     -   Kirim pesan otomatis H-1 sebelum jatuh tempo melalui integrasi WhatsApp Gateway (Fontte API).
 -   **Laporan & Export**
     -   Rekap pembayaran dapat diexport ke PDF per pelanggan.
--   **Admin Panel Modern**
-    -   Dibangun menggunakan **Laravel Filament 4**, dengan tampilan responsif, elegan, dan mudah digunakan.
 
 ---
 
