@@ -33,7 +33,7 @@ Aplikasi ini membantu admin dalam mencatat pelanggan, mengelola cicilan, memanta
 -   **Backend**: [Laravel 12](https://laravel.com/)
 -   **Admin Panel**: [Filament 4](https://filamentphp.com/)
 -   **Database**: MySQL / MariaDB
--   **Notifikasi WA**: Venom Bot / Fontte API (integrasi opsional)
+-   **Notifikasi WA**:Fontte API (integrasi opsional)
 -   **Frontend**: Filament + Tailwind CSS
 -   **Realtime**: Laravel WebSockets (opsional untuk notifikasi live)
 
