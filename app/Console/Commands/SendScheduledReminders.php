@@ -7,27 +7,29 @@ use App\Models\Installment;
 use App\Models\MessageTemplate;
 use App\Models\Notification;
 use App\Services\WhatsAppService;
+use Carbon\Carbon;
 
-class SendReminders extends Command
+class SendScheduledReminders extends Command
 {
-    protected $signature = 'send:reminders {mode?}';
-    protected $description = 'Kirim reminder cicilan (H-1 & H+1) ke pelanggan. Mode opsional: h-1 | h+1';
+    protected $signature = 'send:scheduled-reminders {mode?}';
+    protected $description = 'Kirim reminder cicilan H-1 atau H+1 sesuai jadwal';
 
     public function handle()
     {
+        $now = Carbon::now('Asia/Jakarta');
         $mode = $this->argument('mode');
 
-        $this->info("🔔 Menjalankan reminder cicilan... (mode: " . ($mode ?: 'ALL') . ")");
+        $this->info("🔔 Scheduler reminder dijalankan [mode={$mode}] {$now}");
 
-        // === Reminder H-1 ===
         if (!$mode || $mode === 'h-1') {
-            $installmentsH1 = Installment::whereDate('due_date', now()->addDay())
+            $installmentsH1 = Installment::with(['credit.customer', 'credit.product'])
+                ->whereDate('due_date', $now->copy()->addDay())
                 ->where('status', 'DUE')
                 ->get();
 
             $templateH1 = MessageTemplate::where('name', 'Reminder H-1')->first();
 
-            if ($templateH1) {
+            if ($templateH1 && $installmentsH1->count() > 0) {
                 foreach ($installmentsH1 as $installment) {
                     $customer = $installment->credit->customer;
 
@@ -43,32 +45,30 @@ class SendReminders extends Command
                         $templateH1->content
                     );
 
-                    $status = app(WhatsAppService::class)->sendMessage($customer, $message)
-                        ? 'SENT'
-                        : 'FAILED';
+                    $waResult = app(WhatsAppService::class)->sendMessage($customer, $message);
 
                     Notification::create([
                         'customer_id'    => $customer->id,
                         'installment_id' => $installment->id,
                         'template_id'    => $templateH1->id,
-                        'status'         => $status,
-                        'sent_at'        => now(),
+                        'status'         => $waResult ? 'SENT' : 'FAILED',
+                        'sent_at'        => $now,
                     ]);
 
-                    $this->info("✅ Reminder H-1 ke {$customer->phone} ({$status})");
+                    $this->info("✅ [H-1] {$customer->name} ({$customer->phone}) → " . ($waResult ? 'SENT' : 'FAILED'));
                 }
             }
         }
 
-        // === Reminder H+1 ===
         if (!$mode || $mode === 'h+1') {
-            $installmentsHplus1 = Installment::whereDate('due_date', now()->subDay())
+            $installmentsHplus1 = Installment::with(['credit.customer', 'credit.product'])
+                ->whereDate('due_date', $now->copy()->subDay())
                 ->where('status', 'DUE')
                 ->get();
 
             $templateHplus1 = MessageTemplate::where('name', 'Telat H+1')->first();
 
-            if ($templateHplus1) {
+            if ($templateHplus1 && $installmentsHplus1->count() > 0) {
                 foreach ($installmentsHplus1 as $installment) {
                     $customer = $installment->credit->customer;
 
@@ -84,19 +84,17 @@ class SendReminders extends Command
                         $templateHplus1->content
                     );
 
-                    $status = app(WhatsAppService::class)->sendMessage($customer, $message)
-                        ? 'SENT'
-                        : 'FAILED';
+                    $waResult = app(WhatsAppService::class)->sendMessage($customer, $message);
 
                     Notification::create([
                         'customer_id'    => $customer->id,
                         'installment_id' => $installment->id,
                         'template_id'    => $templateHplus1->id,
-                        'status'         => $status,
-                        'sent_at'        => now(),
+                        'status'         => $waResult ? 'SENT' : 'FAILED',
+                        'sent_at'        => $now,
                     ]);
 
-                    $this->info("✅ Reminder H+1 ke {$customer->phone} ({$status})");
+                    $this->info("✅ [H+1] {$customer->name} ({$customer->phone}) → " . ($waResult ? 'SENT' : 'FAILED'));
                 }
             }
         }

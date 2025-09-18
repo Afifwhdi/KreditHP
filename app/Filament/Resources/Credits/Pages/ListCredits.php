@@ -36,7 +36,6 @@ class ListCredits extends ListRecords
                 ->modifyQueryUsing(fn($query) => $query->where('status', 'LUNAS'))
                 ->badge(Credit::query()->where('status', 'LUNAS')->count())
                 ->badgeColor('success'),
-
         ];
     }
 }
