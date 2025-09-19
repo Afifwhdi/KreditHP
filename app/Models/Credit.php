@@ -32,6 +32,16 @@ class Credit extends Model
         });
 
         static::created(function ($credit) {
+            \App\Models\WaNotification::create([
+                'customer_id' => $credit->customer_id,
+                'status' => 'SENT',
+                'template_id' => null,
+                'installment_id' => null,
+                'sent_at' => now(),
+            ]);
+        });
+
+        static::created(function ($credit) {
             $tenor    = (int) ($credit->tenor_months ?? 0);
             $amount   = (float) ($credit->installment_amount ?? 0);
             $start    = $credit->start_date ? Carbon::parse($credit->start_date) : now();

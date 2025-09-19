@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\MessageTemplate;
-use App\Models\Notification;
+use App\Models\WaNotification;
 use App\Services\WhatsAppService;
 
 class Payment extends Model
@@ -83,7 +83,7 @@ class Payment extends Model
                     ? 'SENT'
                     : 'FAILED';
 
-                Notification::create([
+                WaNotification::create([
                     'customer_id'    => $customer->id,
                     'installment_id' => $installment?->id,
                     'template_id'    => $template->id,

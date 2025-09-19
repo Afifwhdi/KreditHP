@@ -7,7 +7,7 @@ use App\Models\Customer;
 use App\Models\Installment;
 use App\Models\MessageTemplate;
 
-class Notification extends Model
+class WaNotification extends Model
 {
     public $timestamps = false;
 
@@ -19,15 +19,18 @@ class Notification extends Model
         'sent_at'
     ];
 
-    public function customer() {
+    public function customer()
+    {
         return $this->belongsTo(Customer::class);
     }
 
-    public function installment() {
+    public function installment()
+    {
         return $this->belongsTo(Installment::class);
     }
 
-    public function template() {
+    public function template()
+    {
         return $this->belongsTo(MessageTemplate::class);
     }
 }

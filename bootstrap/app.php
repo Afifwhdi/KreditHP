@@ -19,8 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
 
-        $schedule->command('send:scheduled-reminders h-1')->dailyAt('12:10')->timezone('Asia/Jakarta');
-        $schedule->command('send:scheduled-reminders h+1')->dailyAt('12:12')->timezone('Asia/Jakarta');
+        $schedule->command('send:scheduled-reminders h-1')->dailyAt('08:00')->timezone('Asia/Jakarta');
+        $schedule->command('send:scheduled-reminders h+1')->dailyAt('09:00')->timezone('Asia/Jakarta');
 
         // Testing Remainder
         // $schedule->command('send:scheduled-reminders h-1')->everyMinute();

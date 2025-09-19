@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Installment;
 use App\Models\MessageTemplate;
-use App\Models\Notification;
+use App\Models\WaNotification;
 use App\Services\WhatsAppService;
 use Carbon\Carbon;
 
@@ -47,7 +47,7 @@ class SendScheduledReminders extends Command
 
                     $waResult = app(WhatsAppService::class)->sendMessage($customer, $message);
 
-                    Notification::create([
+                    WaNotification::create([
                         'customer_id'    => $customer->id,
                         'installment_id' => $installment->id,
                         'template_id'    => $templateH1->id,
@@ -86,7 +86,7 @@ class SendScheduledReminders extends Command
 
                     $waResult = app(WhatsAppService::class)->sendMessage($customer, $message);
 
-                    Notification::create([
+                    WaNotification::create([
                         'customer_id'    => $customer->id,
                         'installment_id' => $installment->id,
                         'template_id'    => $templateHplus1->id,
